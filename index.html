@@ -127,6 +127,8 @@ h2{margin:0 0 20px;font-size:clamp(24px,4.4vw,36px);font-weight:900;letter-spaci
 
 footer{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--muted);font-size:12px;text-align:center}
 footer p{margin:4px 0}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--gold-hi)}
 
 @media (max-width:560px){
   section{padding:72px 0}
@@ -134,6 +136,35 @@ footer p{margin:4px 0}
   .status{margin-bottom:28px}
 }
 @media (prefers-reduced-motion:reduce){.status i{animation:none}html{scroll-behavior:auto}}
+
+/* ヒーロー下のナビ */
+.nav{display:flex;flex-wrap:wrap;gap:clamp(18px,4.5vw,48px);justify-content:center;margin-top:30px;font-family:'Anton',sans-serif;letter-spacing:.2em;font-size:15px}
+.nav a{color:var(--muted);text-decoration:none;padding:6px 2px;border-bottom:1px solid transparent;transition:color .15s,border-color .15s}
+.nav a:hover{color:var(--gold-hi);border-color:var(--gold)}
+
+/* TOPIC */
+.topics{list-style:none;margin:40px 0 0;padding:0;border-top:1px solid var(--line)}
+.topics li{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;padding:20px 4px;border-bottom:1px solid var(--line)}
+.topics time{font-family:'Anton',sans-serif;letter-spacing:.08em;color:var(--gold);font-size:15px;min-width:92px}
+.topics .tag{font-size:11px;letter-spacing:.12em;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 10px}
+.topics p{margin:0;flex:1 1 280px}
+
+/* SPEC */
+.spec{margin:40px 0 0;display:grid;grid-template-columns:180px 1fr;border-top:1px solid var(--line)}
+.spec dt,.spec dd{margin:0;padding:16px 4px;border-bottom:1px solid var(--line)}
+.spec dt{color:var(--muted);font-size:14px;letter-spacing:.08em}
+@media (max-width:560px){.spec{grid-template-columns:110px 1fr}}
+
+/* RANKING */
+.rank{width:100%;border-collapse:collapse;margin-top:40px}
+.rank th,.rank td{padding:14px 10px;border-bottom:1px solid var(--line);text-align:left}
+.rank th{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:400}
+.rank td.pos{font-family:'Anton',sans-serif;font-size:22px;width:64px;color:var(--muted)}
+.rank tr:nth-child(1) td.pos,.rank tr:nth-child(2) td.pos,.rank tr:nth-child(3) td.pos{color:transparent;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text}
+.rank td.pt{text-align:right;font-family:'Anton',sans-serif;letter-spacing:.06em}
+.rank th.pt{text-align:right}
+.note{color:var(--muted);font-size:13px;margin:18px 0 0}
+.center{text-align:center}
 </style>
 </head>
 <body>
@@ -170,8 +201,14 @@ footer p{margin:4px 0}
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.8-6.3L6.4 22H3.3l7.3-8.3L1 2h6.3l4.4 5.8L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg>
       Xで最新情報を見る
     </a>
-    <a class="btn btn-line" href="#about">ゲームについて</a>
   </div>
+
+  <nav class="nav" aria-label="ページ内リンク">
+    <a href="#about">ABOUT</a>
+    <a href="#topic">TOPIC</a>
+    <a href="#spec">SPEC</a>
+    <a href="#ranking">RANKING</a>
+  </nav>
 
   <a class="scroll" href="#about">SCROLL</a>
 </header>
@@ -214,6 +251,55 @@ footer p{margin:4px 0}
     </div>
   </section>
 
+  <section id="topic">
+    <div class="wrap">
+      <p class="label">TOPIC</p>
+      <h2>お知らせ</h2>
+      <ul class="topics">
+        <li><time datetime="2026-10-18">2026.10.18</time><span class="tag">開発</span><p>タイトル画面を制作中です。</p></li>
+        <li><time datetime="2026-10-17">2026.10.17</time><span class="tag">お知らせ</span><p>公式サイトを公開しました。</p></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="spec">
+    <div class="wrap">
+      <p class="label">SPEC</p>
+      <h2>製品情報</h2>
+      <dl class="spec">
+        <dt>タイトル</dt><dd>LOOT24</dd>
+        <dt>ジャンル</dt><dd>オンライン対戦サバイバル（三人称視点）</dd>
+        <dt>対応機種</dt><dd>PC（Steam）</dd>
+        <dt>プレイ人数</dt><dd>1ワールド最大25人（オンライン専用）</dd>
+        <dt>発売日</dt><dd>未定</dd>
+        <dt>価格</dt><dd>未定</dd>
+        <dt>対象年齢</dt><dd>R15相当（予定）</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="ranking">
+    <div class="wrap">
+      <p class="label">RANKING</p>
+      <h2>ランキング</h2>
+      <p class="lead">所持ポイントの多いプレイヤーの上位です。</p>
+      <table class="rank">
+        <thead><tr><th>順位</th><th>プレイヤー</th><th class="pt">ポイント</th></tr></thead>
+        <tbody>
+          <tr><td class="pos">1</td><td>—</td><td class="pt">—</td></tr>
+          <tr><td class="pos">2</td><td>—</td><td class="pt">—</td></tr>
+          <tr><td class="pos">3</td><td>—</td><td class="pt">—</td></tr>
+          <tr><td class="pos">4</td><td>—</td><td class="pt">—</td></tr>
+          <tr><td class="pos">5</td><td>—</td><td class="pt">—</td></tr>
+        </tbody>
+      </table>
+      <p class="note">ランキングはリリース後、シーズンの開始とともに公開します。</p>
+      <div class="cta">
+        <a class="btn btn-line" href="ranking.html">ランキングをすべて見る</a>
+      </div>
+    </div>
+  </section>
+
   <section class="follow">
     <div class="wrap">
       <p class="label">FOLLOW</p>
@@ -232,7 +318,8 @@ footer p{margin:4px 0}
 <footer>
   <div class="wrap">
     <p>開発中のため、内容は予告なく変わる場合があります。</p>
-    <p>© 2026 LOOT24</p>
+    <p>運営：合同会社iCreation　／　お問い合わせ：<a href="https://x.com/loot24jp" target="_blank" rel="noopener">X（@loot24jp）</a>のDM　／　<a href="privacy.html">プライバシーポリシー</a></p>
+    <p>© 2026 合同会社iCreation</p>
   </div>
 </footer>
 
