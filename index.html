@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOOT24｜オンライン対戦サバイバル</title>
+<meta name="description" content="LOOT24は、制限時間のない街でプレイヤー同士がポイントを奪い合うオンライン対戦サバイバル。いつでも途中参加OK。PC（Steam）向けに開発中。">
+<meta name="theme-color" content="#0a0a0a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="LOOT24">
+<meta property="og:title" content="LOOT24｜オンライン対戦サバイバル">
+<meta property="og:description" content="制限時間なし、いつでも途中参加。眠らない街で、生き残れ。PC（Steam）向けに開発中。">
+<meta property="og:url" content="https://loot24.jp/">
+<meta property="og:image" content="https://loot24.jp/ogp.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@loot24">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Noto+Sans+JP:wght@400;700;900&display=swap">
+<style>
+:root{
+  --bg:#0a0a0a;
+  --panel:#121110;
+  --line:#2a2620;
+  --text:#ece6d8;
+  --muted:#a39a88;
+  --gold:#d9b04f;
+  --gold-hi:#f6d878;
+  --gold-grad:linear-gradient(170deg,#fff4c2 0%,#f3cd5c 20%,#b9831f 46%,#f6d878 60%,#9a6614 84%,#e3bc52 100%);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:'Noto Sans JP',system-ui,sans-serif;line-height:1.8;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:var(--gold-hi)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+
+/* ヒーロー */
+.hero{
+  position:relative;min-height:100svh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:80px 16px 64px;
+  overflow:hidden;isolation:isolate;
+}
+.hero::before{ /* 照準の格子 */
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:
+    linear-gradient(rgba(217,176,79,.06) 1px,transparent 1px) 0 0/64px 64px,
+    linear-gradient(90deg,rgba(217,176,79,.06) 1px,transparent 1px) 0 0/64px 64px;
+  mask-image:radial-gradient(ellipse at center,#000 20%,transparent 70%);
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 70%);
+}
+.hero::after{ /* ネオンのにじみ */
+  content:"";position:absolute;inset:-20%;z-index:-1;
+  background:
+    radial-gradient(closest-side at 30% 65%,rgba(214,40,90,.16),transparent),
+    radial-gradient(closest-side at 72% 35%,rgba(217,176,79,.14),transparent);
+  filter:blur(20px);
+}
+.status{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--line);border-radius:999px;padding:6px 16px;
+  font-size:13px;letter-spacing:.12em;color:var(--muted);margin-bottom:36px;
+}
+.status i{width:8px;height:8px;border-radius:50%;background:#e2334f;box-shadow:0 0 10px #e2334f;animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.25}}
+
+.logo{
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Anton',sans-serif;line-height:1;letter-spacing:.02em;
+  font-size:clamp(60px,15vw,190px);gap:.03em;
+}
+.logo .ol{color:transparent;-webkit-text-stroke:.02em var(--gold)}
+.logo svg{width:.72em;height:.72em;margin:0 .02em;flex:none}
+.logo .num{margin-left:.07em;color:transparent;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text}
+
+.catch{
+  margin:32px 0 6px;font-weight:900;letter-spacing:.14em;
+  font-size:clamp(20px,4.2vw,34px);
+}
+.sub{margin:0;color:var(--muted);font-size:clamp(14px,2.6vw,16px);letter-spacing:.08em}
+
+.cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:40px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+  padding:14px 26px;border-radius:4px;font-weight:700;letter-spacing:.08em;font-size:15px;
+  transition:transform .15s,box-shadow .15s,background .15s;
+}
+.btn-gold{color:#1a1206;background:var(--gold-grad);box-shadow:0 0 0 1px #000 inset}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(217,176,79,.3)}
+.btn-line{color:var(--text);border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.btn-line:hover{border-color:var(--gold);color:var(--gold-hi)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+
+.scroll{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);color:var(--muted);font-size:11px;letter-spacing:.3em;text-decoration:none}
+
+/* セクション */
+section{padding:96px 0;border-top:1px solid var(--line)}
+.label{font-family:'Anton',sans-serif;color:var(--gold);letter-spacing:.2em;font-size:14px;margin:0 0 8px}
+h2{margin:0 0 20px;font-size:clamp(24px,4.4vw,36px);font-weight:900;letter-spacing:.06em;line-height:1.4}
+.lead{max-width:680px;color:var(--muted);margin:0}
+
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:48px}
+.card{
+  position:relative;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:28px 24px 26px;
+}
+.card::before{ /* 角の照準マーク */
+  content:"";position:absolute;top:10px;right:10px;width:14px;height:14px;
+  border-top:2px solid var(--gold);border-right:2px solid var(--gold);opacity:.6;
+}
+.card .no{font-family:'Anton',sans-serif;font-size:34px;line-height:1;color:transparent;-webkit-text-stroke:1px var(--gold);margin-bottom:14px}
+.card h3{margin:0 0 8px;font-size:18px;letter-spacing:.06em}
+.card p{margin:0;color:var(--muted);font-size:14px}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:48px}
+.stat{background:var(--bg);padding:28px 16px;text-align:center}
+.stat b{display:block;font-family:'Anton',sans-serif;font-weight:400;font-size:clamp(34px,7vw,56px);line-height:1.1;color:transparent;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text}
+.stat span{color:var(--muted);font-size:13px;letter-spacing:.1em}
+
+.follow{text-align:center}
+.follow .lead{margin:0 auto}
+.follow .cta{margin-top:32px}
+
+footer{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--muted);font-size:12px;text-align:center}
+footer p{margin:4px 0}
+
+@media (max-width:560px){
+  section{padding:72px 0}
+  .stats{grid-template-columns:1fr}
+  .status{margin-bottom:28px}
+}
+@media (prefers-reduced-motion:reduce){.status i{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="status"><i></i>PC（Steam）向けに開発中</div>
+
+  <h1 class="logo" aria-label="LOOT24">
+    <span class="ol" aria-hidden="true">L</span>
+    <svg viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="35" y2="100">
+          <stop offset="0" stop-color="#fff4c2"/><stop offset=".22" stop-color="#f3cd5c"/>
+          <stop offset=".48" stop-color="#b9831f"/><stop offset=".64" stop-color="#f6d878"/>
+          <stop offset=".86" stop-color="#9a6614"/><stop offset="1" stop-color="#e3bc52"/>
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="36" fill="none" stroke="url(#gold)" stroke-width="10"/>
+      <g stroke="url(#gold)" stroke-width="10">
+        <line x1="50" y1="0" x2="50" y2="22"/><line x1="50" y1="78" x2="50" y2="100"/>
+        <line x1="0" y1="50" x2="22" y2="50"/><line x1="78" y1="50" x2="100" y2="50"/>
+      </g>
+      <circle cx="50" cy="50" r="7" fill="url(#gold)"/>
+    </svg>
+    <span class="ol" aria-hidden="true">OT</span>
+    <span class="num" aria-hidden="true">24</span>
+  </h1>
+
+  <p class="catch">眠らない街で、生き残れ。</p>
+  <p class="sub">オンライン対戦サバイバル</p>
+
+  <div class="cta">
+    <a class="btn btn-gold" href="https://x.com/loot24" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.8-6.3L6.4 22H3.3l7.3-8.3L1 2h6.3l4.4 5.8L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg>
+      Xで最新情報を見る
+    </a>
+    <a class="btn btn-line" href="#about">ゲームについて</a>
+  </div>
+
+  <a class="scroll" href="#about">SCROLL</a>
+</header>
+
+<main>
+  <section id="about">
+    <div class="wrap">
+      <p class="label">ABOUT</p>
+      <h2>終わらない街で、<br>ポイントを奪い合う。</h2>
+      <p class="lead">LOOT24は、制限時間のない常設ワールドで戦い続けるオンライン対戦サバイバルです。いつ入っても、いつ抜けてもいい。生き残るほど、倒すほどポイントが増え、上位に立つほど全員から狙われます。</p>
+
+      <div class="features">
+        <div class="card">
+          <div class="no">01</div>
+          <h3>制限時間なし</h3>
+          <p>試合の終わりも、狭まる安全地帯もありません。街はずっと動き続けます。</p>
+        </div>
+        <div class="card">
+          <div class="no">02</div>
+          <h3>いつでも途中参加</h3>
+          <p>空きがあればすぐに参加。倒されても少し待てば街に戻れます。</p>
+        </div>
+        <div class="card">
+          <div class="no">03</div>
+          <h3>ポイントは奪い合い</h3>
+          <p>倒した相手のポイントは自分のものに。稼ぐほど、賞金首として狙われます。</p>
+        </div>
+        <div class="card">
+          <div class="no">04</div>
+          <h3>人混みに紛れる</h3>
+          <p>街には一般人も歩いています。怪しくても撃てない、そんな駆け引きが待っています。</p>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b>25</b><span>1ワールドの最大人数</span></div>
+        <div class="stat"><b>24h</b><span>眠らない常設ワールド</span></div>
+        <div class="stat"><b>R15</b><span>対象年齢（相当）</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="follow">
+    <div class="wrap">
+      <p class="label">FOLLOW</p>
+      <h2>開発の様子を発信中</h2>
+      <p class="lead">テストプレイの募集やSteamのストアページ公開のお知らせは、Xで真っ先にお届けします。</p>
+      <div class="cta">
+        <a class="btn btn-gold" href="https://x.com/loot24" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.8-6.3L6.4 22H3.3l7.3-8.3L1 2h6.3l4.4 5.8L18.9 2Zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20Z"/></svg>
+          @loot24 をフォロー
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>開発中のため、内容は予告なく変わる場合があります。</p>
+    <p>© 2026 LOOT24</p>
+  </div>
+</footer>
+
+</body>
+</html>
